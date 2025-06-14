@@ -1,0 +1,231 @@
+.typing-game {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.5s ease-out;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.accuracy-container {
+    margin-bottom: 30px;
+}
+
+.accuracy-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.accuracy-bar {
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.accuracy-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4a90e2, #7e57c2);
+    transition: width 0.3s ease;
+}
+
+.accuracy-value {
+    text-align: right;
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.sentence-container {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    min-height: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
+.sentence-container span {
+    transition: color 0.2s ease;
+}
+
+.sentence-container span.correct {
+    color: #28a745;
+}
+
+.sentence-container span.incorrect {
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.typing-input {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 18px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.typing-input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.typing-input:disabled {
+    background: #f8f9fa;
+    cursor: not-allowed;
+}
+
+.game-over {
+    text-align: center;
+    margin-top: 30px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.game-over-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.final-score {
+    font-size: 20px;
+    color: #666;
+}
+
+/* Animations */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .typing-game {
+        padding: 20px;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .sentence-container {
+        font-size: 16px;
+    }
+
+    .typing-input {
+        font-size: 16px;
+    }
+} 
+/* Update these styles in your existing TypingGame.css */
+.typing-game {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.5s ease-out;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #4299E1, #667EEA);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    color: white;
+}
+
+.stat-label {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.stat-value {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.sentence-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 25px;
+    border-radius: 15px;
+    font-size: 22px;
+    line-height: 1.6;
+    margin: 30px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.typing-input {
+    background: white;
+    padding: 20px;
+    font-size: 18px;
+    border: 3px solid #4299E1;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.typing-input:focus {
+    border-color: #667EEA;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+}
