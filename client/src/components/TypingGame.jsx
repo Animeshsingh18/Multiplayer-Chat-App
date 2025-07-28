@@ -6,6 +6,7 @@ const sentences = [
     "Programming is fun and challenging.",
     "Practice makes perfect.",
     "Keep coding and learning new things.",
+    "Hard work beats Talent",
 ];
 
 const TypingGame = ({ score, setScore, socket }) => {
