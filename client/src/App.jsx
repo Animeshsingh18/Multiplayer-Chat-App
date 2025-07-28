@@ -11,12 +11,11 @@ const App = () => {
     const [gameState, setGameState] = useState('login');
     const [players, setPlayers] = useState({
         count: 0,
-        required: 4,
+        required: 3,
         list: []
     });
     const [score, setScore] = useState(0);
     const [isGameOver, setIsGameOver] = useState(false);
-    const [leaderboard, setLeaderboard] = useState([]);
 
     useEffect(() => {
         if (socket) {
@@ -59,12 +58,6 @@ const App = () => {
                 }));
             });
 
-            socket.on("show_leaderboard", (leaderboardData) => {
-                console.log("Showing leaderboard:", leaderboardData);
-                setLeaderboard(leaderboardData);
-                setGameState('leaderboard');
-            });
-
             return () => {
                 socket.off("players_update");
             };
@@ -87,7 +80,11 @@ const App = () => {
             const username = result.value;
             setPlayerName(username);
 
-            const newSocket = io("http://localhost:3000");
+           const newSocket = io("http://localhost:3000", {
+  withCredentials: true,
+  transports: ["websocket"] // Optional: force WebSocket transport
+});
+            
             newSocket.on("connect", () => {
                 console.log("Connected to server!");
                 newSocket.emit("request_to_play", {
@@ -99,45 +96,7 @@ const App = () => {
         }
     };
 
-    // Render leaderboard screen
-    if (gameState === 'leaderboard') {
-        return (
-            <div className="leaderboard-container">
-                <div className="leaderboard-card">
-                    <div className="trophy-animation">👑</div>
-                    <h2 className="leaderboard-title">Game Over - Final Rankings</h2>
-                    <div className="leaderboard-list">
-                        {leaderboard.map((player, index) => (
-                            <div
-                                key={index}
-                                className={`leaderboard-item rank-${index + 1}`}
-                            >
-                                <div className="rank-badge">{index + 1}</div>
-                                <div className="player-info">
-                                    <div className="player-name">{player.name}</div>
-                                    <div className="player-score">{player.score} points</div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <button
-                        className="play-again-btn"
-                        onClick={() => {
-                            setGameState('login');
-                            setLeaderboard([]);
-                            setScore(0);
-                            if (socket) {
-                                socket.disconnect();
-                                setSocket(null);
-                            }
-                        }}
-                    >
-                        Play Again
-                    </button>
-                </div>
-            </div>
-        );
-    }
+
 
     // Render waiting room
     if (gameState === 'waiting') {
@@ -180,7 +139,7 @@ const App = () => {
                     <div className="login-content">
                         <h1 className="login-title">TypeChamp</h1>
                         <p className="login-subtitle">
-                            Compete with 3 other players in this typing challenge!
+                            Compete with 2 other players in this typing challenge!
                         </p>
                         <button className="login-button" onClick={playOnlineClick}>
                             Login to Play
