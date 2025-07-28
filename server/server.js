@@ -4,9 +4,9 @@ const { Server } = require("socket.io");
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
-   origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
-  methods: ["GET", "POST"],
-  credentials: true
+    origin: ["http://localhost:5173", "http://127.0.0.1:5173", "https://your-frontend-domain.com"],
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
@@ -73,14 +73,12 @@ io.on("connection", (socket) => {
       players[socket.id].score = score;
       const roomId = players[socket.id].room;
 
-      // Get updated player list for the room
       const playersInRoom = gameRooms[roomId].map(playerId => ({
         id: playerId,
         name: players[playerId].name,
         score: players[playerId].score
       }));
 
-      // Emit updated player list to everyone in the room
       io.to(roomId).emit("players_update", playersInRoom);
     }
   });
@@ -129,6 +127,26 @@ io.on("connection", (socket) => {
   });
 });
 
-httpServer.listen(3000, () => {
-  console.log("Server listening on port 3000");
+// CRITICAL FIXES FOR RENDER DEPLOYMENT:
+
+// 1. Use environment PORT (Render assigns this dynamically)
+const PORT = process.env.PORT || 3000;
+
+// 2. Listen on 0.0.0.0 (not localhost) to accept external connections
+const HOST = '0.0.0.0';
+
+// 3. Start server with proper host and port
+httpServer.listen(PORT, HOST, () => {
+  console.log(`Server listening on ${HOST}:${PORT}`);
+});
+
+// 4. Add basic HTTP endpoint for health checks
+httpServer.on('request', (req, res) => {
+  if (req.url === '/' || req.url === '/health') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('TypeChamp Server is running!');
+  } else {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('Not Found');
+  }
 });
