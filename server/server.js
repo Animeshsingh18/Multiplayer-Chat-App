@@ -4,14 +4,15 @@ const { Server } = require("socket.io");
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5174",
-    methods: ["GET", "POST"]
+   origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+  methods: ["GET", "POST"],
+  credentials: true
   }
 });
 
 const players = {};
 const gameRooms = {};
-const REQUIRED_PLAYERS = 4;
+const REQUIRED_PLAYERS = 3;
 
 io.on("connection", (socket) => {
   console.log(`User connected: ${socket.id}`);
